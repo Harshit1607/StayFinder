@@ -1,30 +1,41 @@
-import React from 'react'
-import listings from '../data/listings'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../hooks/useRedux'
+import { fetchListings } from '../store/listingsSlice'
 
-const Listings:React.FC = () => {
+const Listings: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const { listings, loading, error } = useAppSelector((state) => state.listings)
+
+  useEffect(() => {
+    dispatch(fetchListings())
+  }, [dispatch])
+
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
+
   return (
-    
-    <div className="w-[90%] md:w-[80%] flex flex-wrap gap-4 ">
-      {listings.map((item, index) => (
+    <div className="w-[90%] flex flex-wrap gap-y-5 justify-between">
+      {listings.map((item) => (
         <div
-          key={index}
-          className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 h-[300px] flex flex-col rounded-t"
+          key={item.id}
+          className="w-full sm:w-1/2 md:w-1/3 lg:w-[22%] h-[300px] flex flex-col rounded-t"
         >
-          <img src="" alt="" className='w-full h-[70%] rounded-t-xl'/>
-          <span className='font-bold'>
-          {item.title}
-          </span>
-          <span>
-          {item.location}
-          </span>
-          <div className='w-full h-[10%] flex flex-row justify-between border-t box-border p-x-1'>
+          <img
+            src={item.image_url || 'https://via.placeholder.com/150'}
+            alt={item.title}
+            className="w-full h-[70%] rounded-t bg-white border-1 border-b-0 mb-2"
+          />
+
+          <span className="font-bold">{item.title}</span>
+          <span>{item.location}</span>
+          <div className="w-full h-[10%] flex flex-row justify-between border-t box-border px-1 mt-2">
             <span>{item.price_per_night}</span>
             <span>5</span>
           </div>
         </div>
-      ))} 
+      ))}
     </div>
-    
   )
 }
 
