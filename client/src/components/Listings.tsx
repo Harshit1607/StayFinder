@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux'
 import { fetchListings } from '../store/listingsSlice'
 
 const Listings: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const { listings, loading, error } = useAppSelector((state) => state.listings)
+  const dispatch = useAppDispatch();
+  const { listings, loading, error } = useAppSelector((state) => state.listings);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchListings())
@@ -20,6 +23,7 @@ const Listings: React.FC = () => {
         <div
           key={item.id}
           className="w-full sm:w-1/2 md:w-1/3 lg:w-[22%] h-[300px] flex flex-col rounded-t"
+          onClick={() => navigate(`/listing/${item.id}`)}
         >
           <img
             src={item.image_url || 'https://via.placeholder.com/150'}

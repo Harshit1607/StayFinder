@@ -6,7 +6,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/listing" element={<SingleListing />} />
+      <Route path="/listing/:id" element={<SingleListing />} />
     </Routes>
   )
 }

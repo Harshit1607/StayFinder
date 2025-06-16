@@ -14,15 +14,29 @@ interface Listing {
 
 interface ListingsState {
   listings: Listing[];
+  singleListing: Listing | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: ListingsState = {
   listings: [],
+  singleListing: null,
   loading: false,
   error: null,
 };
+
+export const fetchSingleListing = createAsyncThunk(
+  'listings/fetchSingleListing',
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await axios.get(`/api/listings/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 export const fetchListings = createAsyncThunk('listings/fetchListings', async (_, thunkAPI) => {
   try {
@@ -48,6 +62,18 @@ const listingsSlice = createSlice({
         state.listings = action.payload;
       })
       .addCase(fetchListings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchSingleListing.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSingleListing.fulfilled, (state, action: PayloadAction<Listing>) => {
+        state.loading = false;
+        state.singleListing = action.payload;
+      })
+      .addCase(fetchSingleListing.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -1,29 +1,45 @@
-import React from 'react'
+import React from 'react';
 
-const ListingInfo:React.FC = () => {
+interface Props {
+  listing: {
+    id: number;
+    title: string;
+    description: string;
+    location: string;
+    price_per_night: string;
+    image_url?: string;
+    average_rating?: string;
+  };
+}
+
+const ListingInfo: React.FC<Props> = ({ listing }) => {
   return (
     <div className='w-full h-screen flex flex-row justify-center items-center px-10 box-border gap-[5%]'>
       <div className='w-[40%] h-[80%]'>
-        <img src="https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/232826678.webp?k=7c3ffae46e5a9988fecc5e9c662e5445710e8eff5c18d1a1d186a1a46d24ae5e&o=" alt="name" 
-        className='w-full h-full'
+        <img
+          src={listing.image_url || 'https://via.placeholder.com/500'}
+          alt={listing.title}
+          className='w-full h-full object-cover rounded'
         />
       </div>
       <div className='w-[40%] h-[80%] flex flex-col items-start justify-start gap-5'>
         <div className='w-full flex flex-col items-start justify-start text-xl'>
-          <span>name</span>
-          <span>location</span>
+          <span className='font-bold text-2xl'>{listing.title}</span>
+          <span className='text-gray-600'>{listing.location}</span>
         </div>
-        <span>desc</span>
-        <div className='w-full flex felx-row justify-start items-center gap-5'>
-          <span>price</span>
-          <span>rating</span>
+        <p className='text-gray-800'>{listing.description}</p>
+        <div className='w-full flex flex-row justify-start items-center gap-5'>
+          <span className='text-green-700 font-semibold'>₹{listing.price_per_night} / night</span>
+          <span>⭐ {listing.average_rating || 'N/A'}</span>
         </div>
-        <div className='w-full h-[15%] flex justify-start items-center border-t'>
-          <button>Book</button>
+        <div className='w-full h-[15%] flex justify-start items-center border-t pt-4'>
+          <button className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition'>
+            Book
+          </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ListingInfo
+export default ListingInfo;
