@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface User {
@@ -15,9 +15,12 @@ interface AuthState {
   error: string | null;
 }
 
+const storedUser = localStorage.getItem('user');
+const storedToken = localStorage.getItem('token');
+
 const initialState: AuthState = {
-  user: null,
-  token: null,
+  user: storedUser ? JSON.parse(storedUser) : null,
+  token: storedToken || null,
   loading: false,
   error: null,
 };
@@ -54,6 +57,8 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
     },
   },
   extraReducers: (builder) => {
@@ -66,6 +71,8 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -79,6 +86,8 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;

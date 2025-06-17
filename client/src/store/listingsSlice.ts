@@ -19,9 +19,13 @@ interface ListingsState {
   error: string | null;
 }
 
+// Load initial state from localStorage
+const storedListings = localStorage.getItem('listings');
+const storedSingleListing = localStorage.getItem('singleListing');
+
 const initialState: ListingsState = {
-  listings: [],
-  singleListing: null,
+  listings: storedListings ? JSON.parse(storedListings) : [],
+  singleListing: storedSingleListing ? JSON.parse(storedSingleListing) : null,
   loading: false,
   error: null,
 };
@@ -38,19 +42,27 @@ export const fetchSingleListing = createAsyncThunk(
   }
 );
 
-export const fetchListings = createAsyncThunk('listings/fetchListings', async (_, thunkAPI) => {
-  try {
-    const response = await axios.get('/api/listings');
-    return response.data;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response.data.message);
+export const fetchListings = createAsyncThunk(
+  'listings/fetchListings',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/api/listings');
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
   }
-});
+);
 
 const listingsSlice = createSlice({
   name: 'listings',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSingleListing(state) {
+      state.singleListing = null;
+      localStorage.removeItem('singleListing');
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchListings.pending, (state) => {
@@ -60,6 +72,7 @@ const listingsSlice = createSlice({
       .addCase(fetchListings.fulfilled, (state, action: PayloadAction<Listing[]>) => {
         state.loading = false;
         state.listings = action.payload;
+        localStorage.setItem('listings', JSON.stringify(action.payload));
       })
       .addCase(fetchListings.rejected, (state, action) => {
         state.loading = false;
@@ -72,6 +85,7 @@ const listingsSlice = createSlice({
       .addCase(fetchSingleListing.fulfilled, (state, action: PayloadAction<Listing>) => {
         state.loading = false;
         state.singleListing = action.payload;
+        localStorage.setItem('singleListing', JSON.stringify(action.payload));
       })
       .addCase(fetchSingleListing.rejected, (state, action) => {
         state.loading = false;
@@ -80,4 +94,5 @@ const listingsSlice = createSlice({
   },
 });
 
+export const { clearSingleListing } = listingsSlice.actions;
 export default listingsSlice.reducer;
