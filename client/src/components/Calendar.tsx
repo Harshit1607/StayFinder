@@ -1,21 +1,24 @@
 import React from 'react';
-import { IoArrowBack } from 'react-icons/io5'; // You can use any icon lib
+import { IoArrowBack } from 'react-icons/io5';
 import DatePicker from 'react-datepicker';
+import { useAppDispatch } from '../hooks/useRedux';
+import { setBookingDates } from '../store/bookingsSlice';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface CalendarProps {
-  onClose: () => void;
+  onClose: (inDate: Date, outDate: Date) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
   const [checkIn, setCheckIn] = React.useState<Date | null>(null);
   const [checkOut, setCheckOut] = React.useState<Date | null>(null);
+  const dispatch = useAppDispatch();
 
   return (
     <div className='relative w-[90%] max-w-4xl h-[70%] bg-white p-6 rounded shadow-lg text-black'>
       <button
         className='absolute top-4 left-4 text-xl'
-        onClick={onClose}
+        onClick={() => window.history.back()}
       >
         <IoArrowBack />
       </button>
@@ -50,7 +53,20 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
       </div>
 
       <div className='mt-10 w-full flex justify-center'>
-        <button className='bg-blue-600 px-6 py-2 rounded hover:bg-blue-700 transition'>
+        <button
+          onClick={() => {
+            if (checkIn && checkOut) {
+              dispatch(setBookingDates({
+                checkIn: checkIn.toISOString(),
+                checkOut: checkOut.toISOString(),
+              }));
+              onClose(checkIn, checkOut); // ✅ Pass selected dates back
+            } else {
+              alert('Please select check-in and check-out dates.');
+            }
+          }}
+          className="bg-blue-600 px-6 py-2 rounded hover:bg-blue-700 transition text-white"
+        >
           Next
         </button>
       </div>

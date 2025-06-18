@@ -16,12 +16,16 @@ interface BookingsState {
   bookings: Booking[];
   loading: boolean;
   error: string | null;
+  checkIn: string | null;
+  checkOut: string | null;
 }
 
 const initialState: BookingsState = {
   bookings: [],
   loading: false,
   error: null,
+  checkIn: null,
+  checkOut: null,
 };
 
 export const createBooking = createAsyncThunk(
@@ -39,7 +43,12 @@ export const createBooking = createAsyncThunk(
 const bookingsSlice = createSlice({
   name: 'bookings',
   initialState,
-  reducers: {},
+  reducers: {
+    setBookingDates: (state, action: PayloadAction<{ checkIn: string; checkOut: string }>) => {
+      state.checkIn = action.payload.checkIn;
+      state.checkOut = action.payload.checkOut;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createBooking.pending, (state) => {
@@ -57,4 +66,5 @@ const bookingsSlice = createSlice({
   },
 });
 
+export const { setBookingDates } = bookingsSlice.actions;
 export default bookingsSlice.reducer;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-// import { useAppSelector } from '../hooks/useRedux';
-// import { useNavigate } from 'react-router-dom';
-import Calendar from './Calendar'; // Import your calendar component
+import { useAppSelector } from '../hooks/useRedux';
+import { useNavigate } from 'react-router-dom';
+import Calendar from './Calendar';
+import BookingSummary from './BookingSummary';
 
 interface Props {
   listing: {
@@ -10,44 +11,70 @@ interface Props {
     description: string;
     location: string;
     price_per_night: string;
-    image_url?: string;
+    image_url?: string[];
     average_rating?: string;
   };
 }
 
 const ListingInfo: React.FC<Props> = ({ listing }) => {
-  // const user = useAppSelector((state) => state.auth.user);
-  // const navigate = useNavigate();
+  const user = useAppSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const [checkIn, setCheckIn] = useState<Date | null>(null);
+  const [checkOut, setCheckOut] = useState<Date | null>(null);
 
   const handleBookClick = () => {
-    // if (!user) {
-    //   navigate('/login');
-    // } else {
-    //   setShowCalendar(true);
-    // }
-    setShowCalendar(true);
+    if (!user) {
+      navigate('/login');
+    } else {
+      setShowCalendar(true);
+    }
   };
 
-  const handleCloseCalendar = () => {
+  const handleCloseCalendar = (inDate: Date, outDate: Date) => {
+    setCheckIn(inDate);
+    setCheckOut(outDate);
     setShowCalendar(false);
+    setShowSummary(true);
+  };
+
+  const handleCloseSummary = () => {
+    setShowSummary(false);
   };
 
   return (
     <div className='w-full h-screen flex flex-row justify-center items-center px-10 box-border gap-[5%] relative'>
       {showCalendar && (
         <div className='absolute top-0 left-0 w-full h-full bg-white z-20 flex justify-center items-center'>
-          <Calendar onClose={handleCloseCalendar} />
+          <Calendar
+            onClose={(inDate, outDate) => handleCloseCalendar(inDate, outDate)}
+          />
+        </div>
+      )}
+
+      {showSummary && checkIn && checkOut && (
+        <div className='absolute top-0 left-0 w-full h-full bg-white z-30 flex justify-center items-center'>
+          <BookingSummary
+            listing={listing}
+            checkIn={checkIn}
+            checkOut={checkOut}
+            onClose={handleCloseSummary}
+          />
         </div>
       )}
 
       <div className='w-[40%] h-[80%]'>
-        <img
-          src={listing.image_url || 'https://via.placeholder.com/500'}
-          alt={listing.title}
-          className='w-full h-full object-cover rounded'
-        />
+        {listing?.image_url ? (
+          <img
+            src={listing.image_url[0] || 'https://via.placeholder.com/500'}
+            alt={listing.title}
+            className='w-full h-full object-cover rounded'
+          />
+        ) : null}
       </div>
+
+
       <div className='w-[40%] h-[80%] flex flex-col items-start justify-start gap-5'>
         <div className='w-full flex flex-col items-start justify-start text-xl'>
           <span className='font-bold text-2xl'>{listing.title}</span>

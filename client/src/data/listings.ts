@@ -1,11 +1,10 @@
-
 export interface Listing {
   id: number;
   title: string;
   description: string;
   location: string;
   price_per_night: number;
-  image_url: string;
+  image_url: string[];
 }
 
 export const listings: Listing[] = [
@@ -15,7 +14,9 @@ export const listings: Listing[] = [
     description: "Traditional Rajasthani haveli with intricate architecture and rooftop views.",
     location: "Jaipur, Rajasthan",
     price_per_night: 6800,
-    image_url: "https://source.unsplash.com/featured/?house,india,1"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 2,
@@ -23,7 +24,9 @@ export const listings: Listing[] = [
     description: "Authentic Kashmiri houseboat experience with mountain views.",
     location: "Srinagar, Kashmir",
     price_per_night: 7500,
-    image_url: "https://source.unsplash.com/featured/?house,india,2"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 3,
@@ -31,7 +34,9 @@ export const listings: Listing[] = [
     description: "Rustic beach hut just steps away from pristine sands.",
     location: "Palolem, Goa",
     price_per_night: 3200,
-    image_url: "https://source.unsplash.com/featured/?house,india,3"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 4,
@@ -39,7 +44,9 @@ export const listings: Listing[] = [
     description: "Stylish 2BHK with city views and premium amenities.",
     location: "Mumbai, Maharashtra",
     price_per_night: 8500,
-    image_url: "https://source.unsplash.com/featured/?house,india,4"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 5,
@@ -47,7 +54,9 @@ export const listings: Listing[] = [
     description: "Historic British-era bungalow with fireplace and garden.",
     location: "Shimla, Himachal Pradesh",
     price_per_night: 5500,
-    image_url: "https://source.unsplash.com/featured/?house,india,5"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 6,
@@ -55,7 +64,9 @@ export const listings: Listing[] = [
     description: "Serene villa overlooking Kerala's famous backwaters.",
     location: "Alleppey, Kerala",
     price_per_night: 6200,
-    image_url: "https://source.unsplash.com/featured/?house,india,6"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 7,
@@ -63,7 +74,9 @@ export const listings: Listing[] = [
     description: "Cozy cottage surrounded by lush tea plantations.",
     location: "Munnar, Kerala",
     price_per_night: 4800,
-    image_url: "https://source.unsplash.com/featured/?house,india,7"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 8,
@@ -71,7 +84,9 @@ export const listings: Listing[] = [
     description: "Modern studio perfect for business travelers and techies.",
     location: "Bangalore, Karnataka",
     price_per_night: 4200,
-    image_url: "https://source.unsplash.com/featured/?house,india,8"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 9,
@@ -79,7 +94,9 @@ export const listings: Listing[] = [
     description: "Traditional guesthouse near ancient temples with spiritual ambiance.",
     location: "Madurai, Tamil Nadu",
     price_per_night: 3800,
-    image_url: "https://source.unsplash.com/featured/?house,india,9"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 10,
@@ -87,7 +104,9 @@ export const listings: Listing[] = [
     description: "Luxury accommodation with stunning Lake Pichola views.",
     location: "Udaipur, Rajasthan",
     price_per_night: 9200,
-    image_url: "https://source.unsplash.com/featured/?house,india,10"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 11,
@@ -95,7 +114,9 @@ export const listings: Listing[] = [
     description: "Peaceful ashram-style accommodation perfect for yoga enthusiasts.",
     location: "Rishikesh, Uttarakhand",
     price_per_night: 3500,
-    image_url: "https://source.unsplash.com/featured/?house,india,11"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 12,
@@ -103,7 +124,9 @@ export const listings: Listing[] = [
     description: "Luxury tent accommodation with camel safari and cultural shows.",
     location: "Jaisalmer, Rajasthan",
     price_per_night: 7800,
-    image_url: "https://source.unsplash.com/featured/?house,india,12"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 13,
@@ -111,7 +134,9 @@ export const listings: Listing[] = [
     description: "Charming cottage with eucalyptus groves and cool mountain air.",
     location: "Ooty, Tamil Nadu",
     price_per_night: 5200,
-    image_url: "https://source.unsplash.com/featured/?house,india,13"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 14,
@@ -119,7 +144,9 @@ export const listings: Listing[] = [
     description: "Luxurious penthouse with panoramic city views and rooftop access.",
     location: "Hyderabad, Telangana",
     price_per_night: 7200,
-    image_url: "https://source.unsplash.com/featured/?house,india,14"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 15,
@@ -127,7 +154,9 @@ export const listings: Listing[] = [
     description: "Colonial-style villa in the heart of French architectural heritage.",
     location: "Pondicherry, Tamil Nadu",
     price_per_night: 6500,
-    image_url: "https://source.unsplash.com/featured/?house,india,15"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 16,
@@ -135,7 +164,9 @@ export const listings: Listing[] = [
     description: "Budget-friendly accommodation with direct river views and spiritual atmosphere.",
     location: "Varanasi, Uttar Pradesh",
     price_per_night: 2800,
-    image_url: "https://source.unsplash.com/featured/?house,india,16"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 17,
@@ -143,7 +174,9 @@ export const listings: Listing[] = [
     description: "Eco-friendly accommodation amidst aromatic spice gardens.",
     location: "Thekkady, Kerala",
     price_per_night: 4500,
-    image_url: "https://source.unsplash.com/featured/?house,india,17"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 18,
@@ -151,7 +184,9 @@ export const listings: Listing[] = [
     description: "Authentic tribal culture experience with traditional meals and crafts.",
     location: "Bastar, Chhattisgarh",
     price_per_night: 3200,
-    image_url: "https://source.unsplash.com/featured/?house,india,18"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 19,
@@ -159,7 +194,9 @@ export const listings: Listing[] = [
     description: "Peaceful monastery accommodation with meditation halls and mountain views.",
     location: "Dharamshala, Himachal Pradesh",
     price_per_night: 3800,
-    image_url: "https://source.unsplash.com/featured/?house,india,19"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   },
   {
     id: 20,
@@ -167,7 +204,9 @@ export const listings: Listing[] = [
     description: "Wildlife lodge experience in the mangrove forests with tiger spotting opportunities.",
     location: "Sundarbans, West Bengal",
     price_per_night: 6800,
-    image_url: "https://source.unsplash.com/featured/?house,india,20"
+    image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVl6p3r_zLZmpaBI1SxOAX6DzEH9txtuQFQ&s",
+      "https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking-500x500.jpg"
+    ]
   }
 ];
 

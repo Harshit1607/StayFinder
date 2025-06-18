@@ -26,7 +26,7 @@ const Listings: React.FC = () => {
           onClick={() => navigate(`/listing/${item.id}`)}
         >
           <img
-            src={item.image_url || 'https://via.placeholder.com/150'}
+            src={item.image_url[0] || 'https://via.placeholder.com/150'}
             alt={item.title}
             className="w-full h-[70%] rounded-t bg-white border-1 border-b-0 mb-2"
           />

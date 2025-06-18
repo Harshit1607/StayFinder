@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model bookings {
   id          Int       @id @default(autoincrement())
   guest_id    Int?
@@ -19,6 +18,19 @@ model bookings {
   rating      Int?
   users       users?    @relation(fields: [guest_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   listings    listings? @relation(fields: [listing_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  payment     payments? // 👈 one-to-one relation
+}
+
+model payments {
+  id                  Int       @id @default(autoincrement())
+  razorpay_order_id   String
+  razorpay_payment_id String
+  razorpay_signature  String
+  booking_id          Int       @unique
+  created_at          DateTime  @default(now()) @db.Timestamp(6)
+
+  booking             bookings  @relation(fields: [booking_id], references: [id], onDelete: Cascade)
 }
 
 model listings {
@@ -27,7 +39,7 @@ model listings {
   description     String
   location        String
   price_per_night Decimal    @db.Decimal(10, 2)
-  image_url       String?
+  image_url       String[]
   created_at      DateTime?  @default(now()) @db.Timestamp(6)
   average_rating  Decimal?   @default(5) @db.Decimal(2, 1)
   bookings        bookings[]

@@ -8,7 +8,7 @@ interface Listing {
   description: string;
   location: string;
   price_per_night: string;
-  image_url?: string;
+  image_url: string[];
   average_rating?: string;
 }
 
