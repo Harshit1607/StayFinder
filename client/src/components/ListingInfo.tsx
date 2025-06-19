@@ -33,11 +33,13 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
   };
 
   const handleCloseCalendar = (inDate: Date, outDate: Date) => {
-    setCheckIn(inDate);
-    setCheckOut(outDate);
-    setShowCalendar(false);
-    setShowSummary(true);
-  };
+  console.log('Received dates from calendar:', inDate, outDate); // 👈 Add this
+  setCheckIn(inDate);
+  setCheckOut(outDate);
+  setShowCalendar(false);
+  setShowSummary(true);
+};
+
 
   const handleCloseSummary = () => {
     setShowSummary(false);
@@ -54,15 +56,16 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
       )}
 
       {showSummary && checkIn && checkOut && (
-        <div className='absolute top-0 left-0 w-full h-full bg-white z-30 flex justify-center items-center'>
-          <BookingSummary
-            listing={listing}
-            checkIn={checkIn}
-            checkOut={checkOut}
-            onClose={handleCloseSummary}
-          />
-        </div>
-      )}
+  <div className='absolute top-0 left-0 w-full h-full bg-white z-[100] flex justify-center items-center border-4 border-green-500'>
+    <BookingSummary
+      listing={listing}
+      checkIn={checkIn}
+      checkOut={checkOut}
+      onClose={handleCloseSummary}
+    />
+  </div>
+)}
+
 
       <div className='w-[40%] h-[80%]'>
         {listing?.image_url ? (

@@ -9,10 +9,13 @@ interface Order {
 }
 
 interface UserOrder {
-  _id: string;
-  items: any[];
+  id: number;              // ✅ Add this line
+  guest_id: number;
+  listing_id: number;
+  start_date: string;
+  end_date: string;
+  total_price: string;
   payment: boolean;
-  // Add more fields as needed
 }
 
 interface PaymentState {
@@ -59,7 +62,7 @@ export const createOrder = createAsyncThunk<OrderResponse, CreateOrderPayload>(
 export const verifyPayment = createAsyncThunk(
   'payment/verifyPayment',
   async (
-    { orderId, paymentDetails }: { orderId: string; paymentDetails: any },
+    { orderId, paymentDetails }: { orderId: number; paymentDetails: any },
     thunkAPI
   ) => {
     try {
@@ -96,6 +99,11 @@ const paymentSlice = createSlice({
       })
       .addCase(verifyPayment.fulfilled, state => {
         state.makePayment = false;
+      })
+      .addCase(verifyPayment.rejected, (state, action) => {
+        state.makePayment = false;
+        state.error = action.payload as string;
+        alert("Payment verification failed: " + state.error);
       });
   },
 });

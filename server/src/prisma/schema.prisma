@@ -7,30 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model bookings {
-  id          Int       @id @default(autoincrement())
-  guest_id    Int?
-  listing_id  Int?
-  start_date  DateTime  @db.Date
-  end_date    DateTime  @db.Date
-  total_price Decimal   @db.Decimal(10, 2)
-  created_at  DateTime? @default(now()) @db.Timestamp(6)
-  rating      Int?
-  users       users?    @relation(fields: [guest_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  listings    listings? @relation(fields: [listing_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  payment     payments? // 👈 one-to-one relation
-}
-
 model payments {
-  id                  Int       @id @default(autoincrement())
+  id                  Int      @id @default(autoincrement())
   razorpay_order_id   String
   razorpay_payment_id String
   razorpay_signature  String
-  booking_id          Int       @unique
-  created_at          DateTime  @default(now()) @db.Timestamp(6)
+  created_at          DateTime @default(now()) @db.Timestamp(6)
 
-  booking             bookings  @relation(fields: [booking_id], references: [id], onDelete: Cascade)
+  booking bookings? @relation("BookingPayment")
 }
 
 model listings {
@@ -45,12 +29,30 @@ model listings {
   bookings        bookings[]
 }
 
+model bookings {
+  id          Int       @id @default(autoincrement())
+  guest_id    Int
+  listing_id  Int?
+  start_date  DateTime  @db.Date
+  end_date    DateTime  @db.Date
+  total_price Decimal   @db.Decimal(10, 2)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  rating      Int?
+
+  payment_id Int?      @unique
+  payment    payments? @relation("BookingPayment", fields: [payment_id], references: [id])
+
+  users    users     @relation("UserBookings", fields: [guest_id], references: [id]) // ✅ named and required
+  listings listings? @relation(fields: [listing_id], references: [id])
+}
+
 model users {
-  id           Int        @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
-  email        String     @unique
+  email        String    @unique
   password     String
-  created_at   DateTime?  @default(now()) @db.Timestamp(6)
-  phone_number String     @unique @db.VarChar(15)
-  bookings     bookings[]
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  phone_number String    @unique @db.VarChar(15)
+
+  bookings bookings[] @relation("UserBookings")
 }
