@@ -3,6 +3,7 @@ import { useAppSelector } from '../hooks/useRedux';
 import { useNavigate } from 'react-router-dom';
 import Calendar from './Calendar';
 import BookingSummary from './BookingSummary';
+import ImageCarousel from './ImageCarousel';
 
 interface Props {
   listing: {
@@ -33,22 +34,20 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
   };
 
   const handleCloseCalendar = (inDate: Date, outDate: Date) => {
-  console.log('Received dates from calendar:', inDate, outDate); // 👈 Add this
-  setCheckIn(inDate);
-  setCheckOut(outDate);
-  setShowCalendar(false);
-  setShowSummary(true);
-};
-
+    setCheckIn(inDate);
+    setCheckOut(outDate);
+    setShowCalendar(false);
+    setShowSummary(true);
+  };
 
   const handleCloseSummary = () => {
     setShowSummary(false);
   };
 
   return (
-    <div className='w-full h-screen flex flex-row justify-center items-center px-10 box-border gap-[5%] relative'>
+    <div className="w-full min-h-screen bg-[#0f0f0f] text-white flex flex-row justify-center items-center px-10 py-10 box-border gap-[5%] relative font-sans">
       {showCalendar && (
-        <div className='absolute top-0 left-0 w-full h-full bg-white z-20 flex justify-center items-center'>
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80 z-20 flex justify-center items-center">
           <Calendar
             onClose={(inDate, outDate) => handleCloseCalendar(inDate, outDate)}
           />
@@ -56,44 +55,66 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
       )}
 
       {showSummary && checkIn && checkOut && (
-  <div className='absolute top-0 left-0 w-full h-full bg-white z-[100] flex justify-center items-center border-4 border-green-500'>
-    <BookingSummary
-      listing={listing}
-      checkIn={checkIn}
-      checkOut={checkOut}
-      onClose={handleCloseSummary}
-    />
-  </div>
-)}
-
-
-      <div className='w-[40%] h-[80%]'>
-        {listing?.image_url ? (
-          <img
-            src={listing.image_url[0] || 'https://via.placeholder.com/500'}
-            alt={listing.title}
-            className='w-full h-full object-cover rounded'
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80 z-[100] flex justify-center items-center border-4 border-green-500">
+          <BookingSummary
+            listing={listing}
+            checkIn={checkIn}
+            checkOut={checkOut}
+            onClose={handleCloseSummary}
           />
-        ) : null}
+        </div>
+      )}
+
+      {/* Left - Image Section with layers */}
+      <div className="w-[40%] h-[80%] relative">
+        <div className="absolute top-2 -left-5 w-full h-[90%] bg-yellow-800 rounded-md -z-10" />
+        <div className="absolute bottom-2 -right-5 w-full h-[90%] bg-white rounded-md -z-10" />
+        <div className="w-full h-full rounded overflow-hidden shadow-lg">
+          {listing?.image_url && listing.image_url.length > 0 ? (
+            <ImageCarousel images={listing.image_url} />
+          ) : (
+            <img
+              src="https://via.placeholder.com/500"
+              alt="No Image"
+              className="w-full h-full object-cover rounded"
+            />
+          )}
+        </div>
       </div>
 
+      {/* Right - Text Content */}
+      <div className="w-[40%] h-[90%] px-8  rounded flex flex-col justify-between">
+        <div className="flex flex-col gap-3">
+          <span className="text-xs text-yellow-700 uppercase tracking-widest font-medium">
+            Luxury Hotel and Resort
+          </span>
+          <h2 className="text-3xl font-semibold text-white leading-tight">
+            {listing.title}, {listing.location}
+          </h2>
+          <span className="text-gray-400 mt-2 text-sm leading-relaxed">
+            {listing.description}
+          </span>
+        </div>
 
-      <div className='w-[40%] h-[80%] flex flex-col items-start justify-start gap-5'>
-        <div className='w-full flex flex-col items-start justify-start text-xl'>
-          <span className='font-bold text-2xl'>{listing.title}</span>
-          <span className='text-gray-600'>{listing.location}</span>
+        <div className="flex flex-row gap-10 mt-6">
+          <div className="flex flex-col">
+            <span className="text-3xl font-bold text-yellow-600">250+</span>
+            <span className="text-sm text-gray-400">Luxury Rooms</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-3xl font-bold text-yellow-600">
+              {listing.average_rating || '4.9'}
+            </span>
+            <span className="text-sm text-gray-400">Customer Rating</span>
+          </div>
         </div>
-        <p className='text-gray-800'>{listing.description}</p>
-        <div className='w-full flex flex-row justify-start items-center gap-5'>
-          <span className='text-green-700 font-semibold'>₹{listing.price_per_night} / night</span>
-          <span>⭐ {listing.average_rating || 'N/A'}</span>
-        </div>
-        <div className='w-full h-[15%] flex justify-start items-center border-t pt-4'>
+
+        <div className="mt-6">
           <button
-            className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition'
+            className="bg-yellow-700 text-white px-6 py-2 rounded hover:bg-yellow-800 transition-all"
             onClick={handleBookClick}
           >
-            Book
+            Book Now
           </button>
         </div>
       </div>

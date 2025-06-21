@@ -15,17 +15,19 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className='relative w-[90%] max-w-4xl h-[70%] bg-white p-6 rounded shadow-lg text-black'>
+    <div className="relative w-[90%] max-w-4xl h-[70%] bg-[#111] text-white p-8 rounded shadow-2xl border border-gray-700">
       <button
-        className='absolute top-4 left-4 text-xl'
+        className="absolute top-4 left-4 text-white text-2xl hover:text-yellow-600 transition"
         onClick={() => window.history.back()}
       >
         <IoArrowBack />
       </button>
 
-      <div className='w-full h-full flex flex-col md:flex-row justify-between gap-8 mt-8'>
-        <div className='flex flex-col items-start'>
-          <label className='font-semibold mb-2'>Check-In</label>
+      <h2 className="text-xl font-semibold text-yellow-600 mb-6 text-center">Select Booking Dates</h2>
+
+      <div className="flex flex-col md:flex-row justify-between gap-8 mt-4">
+        <div className="flex flex-col w-full">
+          <label className="text-sm font-medium text-gray-300 mb-2">Check-In</label>
           <DatePicker
             selected={checkIn}
             onChange={(date) => setCheckIn(date)}
@@ -33,12 +35,14 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
             startDate={checkIn}
             endDate={checkOut}
             minDate={new Date()}
-            className='border rounded px-3 py-2 w-full'
-            placeholderText='Select check-in date'
+            className="bg-[#222] text-white border border-gray-600 rounded px-4 py-2 w-full focus:outline-none"
+            placeholderText="Select check-in date"
+            calendarClassName="dark-datepicker"
           />
         </div>
-        <div className='flex flex-col items-start'>
-          <label className='font-semibold mb-2'>Check-Out</label>
+
+        <div className="flex flex-col w-full">
+          <label className="text-sm font-medium text-gray-300 mb-2">Check-Out</label>
           <DatePicker
             selected={checkOut}
             onChange={(date) => setCheckOut(date)}
@@ -46,13 +50,14 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
             startDate={checkIn}
             endDate={checkOut}
             minDate={checkIn || new Date()}
-            className='border rounded px-3 py-2 w-full'
-            placeholderText='Select check-out date'
+            className="bg-[#222] text-white border border-gray-600 rounded px-4 py-2 w-full focus:outline-none"
+            placeholderText="Select check-out date"
+            calendarClassName="dark-datepicker"
           />
         </div>
       </div>
 
-      <div className='mt-10 w-full flex justify-center'>
+      <div className="mt-10 flex justify-center">
         <button
           onClick={() => {
             if (checkIn && checkOut) {
@@ -60,12 +65,12 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
                 checkIn: checkIn.toISOString(),
                 checkOut: checkOut.toISOString(),
               }));
-              onClose(checkIn, checkOut); // ✅ Pass selected dates back
+              onClose(checkIn, checkOut);
             } else {
-              alert('Please select check-in and check-out dates.');
+              alert('Please select both check-in and check-out dates.');
             }
           }}
-          className="bg-blue-600 px-6 py-2 rounded hover:bg-blue-700 transition text-white"
+          className="bg-yellow-700 text-white px-6 py-2 rounded hover:bg-yellow-800 transition"
         >
           Next
         </button>

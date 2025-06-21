@@ -63,7 +63,6 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
               dispatch(verifyPayment({ orderId: userOrder.id, paymentDetails }));
             } else {
               alert('Order not found. Please try again.');
-              console.error('Order ID missing:', order, userOrder);
             }
           },
           prefill: {
@@ -80,35 +79,27 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
 
   useEffect(() => {
     if (!makePayment && order && userOrder) {
-      // Redirect to homepage after successful payment
       navigate('/');
     }
   }, [makePayment, order, userOrder]);
 
   return (
-    <div className="w-[90%] max-w-2xl bg-black text-white p-8 rounded-lg shadow-lg flex flex-col items-center gap-4">
-      <h2 className="text-2xl font-semibold mb-4">Booking Summary</h2>
-      <p>
-        <strong>Listing:</strong> {listing.title}
-      </p>
-      <p>
-        <strong>Check-in:</strong> {checkIn.toDateString()}
-      </p>
-      <p>
-        <strong>Check-out:</strong> {checkOut.toDateString()}
-      </p>
-      <p>
-        <strong>Nights:</strong> {nights}
-      </p>
-      <p>
-        <strong>Total:</strong> ₹{total}
-      </p>
+    <div className="w-[90%] max-w-2xl bg-[#111] text-white p-8 rounded-lg shadow-lg flex flex-col items-center gap-4 border border-gray-700">
+      <h2 className="text-2xl font-semibold text-yellow-600 mb-4">Booking Summary</h2>
+
+      <div className="w-full text-sm space-y-2">
+        <p><strong className="text-gray-400">Listing:</strong> {listing.title}</p>
+        <p><strong className="text-gray-400">Check-in:</strong> {checkIn.toDateString()}</p>
+        <p><strong className="text-gray-400">Check-out:</strong> {checkOut.toDateString()}</p>
+        <p><strong className="text-gray-400">Nights:</strong> {nights}</p>
+        <p><strong className="text-gray-400">Total:</strong> ₹{total}</p>
+      </div>
 
       <div className="flex gap-4 mt-6">
         <button
           disabled={loading}
           onClick={handlePayment}
-          className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded transition disabled:opacity-50"
+          className="bg-yellow-700 hover:bg-yellow-800 px-6 py-2 rounded transition text-white disabled:opacity-50"
         >
           Book Now
         </button>
