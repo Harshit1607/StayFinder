@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { fetchSingleListing } from '../store/listingsSlice';
 import ListingInfo from '../components/ListingInfo';
+import Navbar from '../components/Navbar';
 
 const SingleListing: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +21,7 @@ const SingleListing: React.FC = () => {
 
   return (
     <div className='w-screen h-screen'>
+      <Navbar />
       <ListingInfo listing={singleListing} />
     </div>
   );

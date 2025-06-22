@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { registerUser } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,7 +61,7 @@ const Signup: React.FC = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
-            className="w-[80%] px-4 py-5 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
+            className="w-[80%] px-4 py-3 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
           />
 
           <input
@@ -67,7 +69,7 @@ const Signup: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-[80%] px-4 py-5 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
+            className="w-[80%] px-4 py-3 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
           />
 
           <input
@@ -75,16 +77,25 @@ const Signup: React.FC = () => {
             value={phone_number}
             onChange={(e) => setPhoneNumber(e.target.value)}
             placeholder="Phone Number"
-            className="w-[80%] px-4 py-5 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
+            className="w-[80%] px-4 py-3 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
           />
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-[80%] px-4 py-5 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600"
-          />
+          <div className="w-[80%] relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full px-4 py-3 bg-[#121212] border border-[#3a3a3a] text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-yellow-600 pr-12"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
 

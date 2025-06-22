@@ -10,7 +10,18 @@ interface Booking {
   end_date: string;
   total_price: string;
   rating?: number;
+  listings: {
+    id: number;
+    title: string;
+    description: string;
+    location: string;
+    price_per_night: string;
+    image_url: string[];
+    average_rating?: string;
+  };
 }
+
+
 
 interface BookingsState {
   bookings: Booking[];
@@ -28,17 +39,18 @@ const initialState: BookingsState = {
   checkOut: null,
 };
 
-export const createBooking = createAsyncThunk(
-  'bookings/createBooking',
-  async (data: Omit<Booking, 'id'>, thunkAPI) => {
+export const fetchUserBookings = createAsyncThunk(
+  'bookings/fetchUserBookings',
+  async (userId: number, thunkAPI) => {
     try {
-      const response = await axios.post('/api/bookings', data);
-      return response.data;
+      const res = await axios.get(`/api/bookings/${userId}`);
+      return res.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      return thunkAPI.rejectWithValue(error.response?.data?.error || 'Failed to fetch bookings');
     }
   }
 );
+
 
 const bookingsSlice = createSlice({
   name: 'bookings',
@@ -51,15 +63,15 @@ const bookingsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createBooking.pending, (state) => {
+      .addCase(fetchUserBookings.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(createBooking.fulfilled, (state, action: PayloadAction<Booking>) => {
+      .addCase(fetchUserBookings.fulfilled, (state, action) => {
         state.loading = false;
-        state.bookings.push(action.payload);
+        state.bookings = action.payload;
       })
-      .addCase(createBooking.rejected, (state, action) => {
+      .addCase(fetchUserBookings.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

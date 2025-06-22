@@ -45,7 +45,7 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#0f0f0f] text-white flex flex-row justify-center items-center px-10 py-10 box-border gap-[5%] relative font-sans">
+    <div className="w-full h-screen bg-[#0f0f0f] text-white flex flex-row justify-center items-center px-10 box-border gap-[5%] relative font-sans pt-[100px]">
       {showCalendar && (
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80 z-20 flex justify-center items-center">
           <Calendar
@@ -67,9 +67,9 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
 
       {/* Left - Image Section with layers */}
       <div className="w-[40%] h-[80%] relative">
-        <div className="absolute top-2 -left-5 w-full h-[90%] bg-yellow-800 rounded-md -z-10" />
-        <div className="absolute bottom-2 -right-5 w-full h-[90%] bg-white rounded-md -z-10" />
-        <div className="w-full h-full rounded overflow-hidden shadow-lg">
+        <div className="absolute top-2 -left-5 w-full h-[90%] bg-yellow-800 rounded-md z-5" />
+        <div className="absolute bottom-2 -right-5 w-full h-[90%] bg-white rounded-md z-5" />
+        <div className="w-full h-full rounded-md overflow-hidden shadow-lg relative z-10">
           {listing?.image_url && listing.image_url.length > 0 ? (
             <ImageCarousel images={listing.image_url} />
           ) : (
@@ -83,7 +83,7 @@ const ListingInfo: React.FC<Props> = ({ listing }) => {
       </div>
 
       {/* Right - Text Content */}
-      <div className="w-[40%] h-[90%] px-8  rounded flex flex-col justify-between">
+      <div className="w-[40%] h-[80%] px-8 rounded flex flex-col justify-between">
         <div className="flex flex-col gap-3">
           <span className="text-xs text-yellow-700 uppercase tracking-widest font-medium">
             Luxury Hotel and Resort
