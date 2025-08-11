@@ -18,7 +18,7 @@ interface Props {
 }
 
 const ListingInfo: React.FC<Props> = ({ listing }) => {
-  const user = useAppSelector((state) => state.auth.user);
+  const {user} = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
